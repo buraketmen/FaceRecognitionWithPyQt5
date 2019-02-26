@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1313</width>
+    <height>605</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1313</width>
+    <height>605</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Personel Takip</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="2">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Eras Demi ITC</family>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="text">
+       <string>KAMERADA GORUNTULENEN YUZLER VE BILGILERI</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="Line" name="line_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="startButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Eras Demi ITC</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(197, 208, 255)</string>
+        </property>
+        <property name="text">
+         <string>Kamerayi Baslat</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="stopButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Eras Demi ITC</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(197, 208, 255)</string>
+        </property>
+        <property name="text">
+         <string>Kamerayi Durdur</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="detectButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Eras Demi ITC</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(197, 208, 255)</string>
+        </property>
+        <property name="text">
+         <string>Yuz Tanimayi Baslat</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="trainButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Eras Demi ITC</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(197, 208, 255)</string>
+        </property>
+        <property name="text">
+         <string>Yuzleri Tara</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="imgLabel">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color: rgb(0, 0, 0)
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::WinPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>638</width>
+         <height>497</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="tableWidget">
+          <column>
+           <property name="text">
+            <string>T.C. Numarasi</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="textAlignment">
+            <set>AlignLeading|AlignVCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Adi</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Soyadi</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Gorunme Tarihi</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Gorunme Saati</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1313</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDosya">
+    <property name="title">
+     <string>Dosya</string>
+    </property>
+    <widget class="QMenu" name="menuExceleAktar">
+     <property name="title">
+      <string>Excel'e Aktar</string>
+     </property>
+     <addaction name="actionPersonelleriExcelDosyasinaAktar"/>
+     <addaction name="actionGiris_Cikis_KayitlariniExcelDosyasinaAktar"/>
+    </widget>
+    <addaction name="menuExceleAktar"/>
+    <addaction name="separator"/>
+    <addaction name="actionCikis"/>
+   </widget>
+   <widget class="QMenu" name="menuPersonel">
+    <property name="title">
+     <string>Personel</string>
+    </property>
+    <addaction name="actionPersoneller"/>
+    <addaction name="actionPersonelEkle"/>
+    <addaction name="separator"/>
+    <addaction name="actionPersonelGirisCikisBilgileri"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuHakkinda">
+    <property name="title">
+     <string>Hakkinda</string>
+    </property>
+    <addaction name="actionProgramHakkinda"/>
+    <addaction name="actionGelistiriciHakkinda"/>
+   </widget>
+   <addaction name="menuDosya"/>
+   <addaction name="menuPersonel"/>
+   <addaction name="menuHakkinda"/>
+  </widget>
+  <action name="actionDiskten_Ekle">
+   <property name="text">
+    <string>Diskten Ekle</string>
+   </property>
+  </action>
+  <action name="actionProgramHakkinda">
+   <property name="text">
+    <string>Program Hakkinda</string>
+   </property>
+  </action>
+  <action name="actionGelistiriciHakkinda">
+   <property name="text">
+    <string>Gelistirici Hakkinda</string>
+   </property>
+  </action>
+  <action name="actionPersonelEkle">
+   <property name="text">
+    <string>Personel Ekle</string>
+   </property>
+  </action>
+  <action name="actionPersoneller">
+   <property name="text">
+    <string>Personeller</string>
+   </property>
+  </action>
+  <action name="actionLoglar">
+   <property name="text">
+    <string>Genel Loglar</string>
+   </property>
+  </action>
+  <action name="actionKamera1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kamera-1</string>
+   </property>
+  </action>
+  <action name="actionKamera2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kamera-2</string>
+   </property>
+  </action>
+  <action name="actionKamera3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kamera-3</string>
+   </property>
+  </action>
+  <action name="actionKamera4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kamera-4</string>
+   </property>
+  </action>
+  <action name="actionKamera5">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kamera-5</string>
+   </property>
+  </action>
+  <action name="actionCikis">
+   <property name="text">
+    <string>Cikis</string>
+   </property>
+  </action>
+  <action name="actionYazdir">
+   <property name="text">
+    <string>Excel'e Yazdir</string>
+   </property>
+  </action>
+  <action name="actionPersonelGirisCikisBilgileri">
+   <property name="text">
+    <string>Personel Giris/Cikis Bilgileri</string>
+   </property>
+  </action>
+  <action name="actionFotograf_Ekle">
+   <property name="text">
+    <string>Fotograf Ekle</string>
+   </property>
+  </action>
+  <action name="actionPersonelleriExcelDosyasinaAktar">
+   <property name="text">
+    <string>Personelleri Excel Dosyasina Aktar</string>
+   </property>
+  </action>
+  <action name="actionGiris_Cikis_KayitlariniExcelDosyasinaAktar">
+   <property name="text">
+    <string>Giris-Cikis Kayitlarini Excel Dosyasina Aktar</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
