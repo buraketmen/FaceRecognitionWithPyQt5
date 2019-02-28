@@ -3,7 +3,7 @@ import os
 import cv2
 import datetime
 import locale
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtWidgets
 from PersonelTakipMain import Ui_MainWindow
 import PersonelSureEkrani
 from Personel import Ui_Dialog
@@ -134,24 +134,25 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
             if fname:
                 workbook = Workbook(fname)
                 worksheet = workbook.add_worksheet()
-                content = 'SELECT TcNo,image,Ad,Soyad,Yas,Pozisyon,TelNo,MesaiTipi,Aciklama FROM personeller'
+                content = 'SELECT TcNo,Ad,Soyad,Yas,Pozisyon,TelNo,MesaiTipi,Aciklama,image FROM personeller'
                 mysel = conn.execute(content)
-                worksheet.write(0,0,"T.C. No")
-                worksheet.write(0, 1, "Fotograf Uzantisi")
-                worksheet.write(0, 2, "Ad")
-                worksheet.write(0, 3, "Soyad")
-                worksheet.write(0, 4, "Yas")
-                worksheet.write(0, 5, "Pozisyon")
-                worksheet.write(0, 6, "Telefon Numarasi")
-                worksheet.write(0, 7, "Mesai Tipi")
-                worksheet.write(0, 8, "Aciklama")
+                cell_format = workbook.add_format({'bold': True, 'italic': False})
+                worksheet.write(0,0,"T.C. No",cell_format)
+                worksheet.write(0, 1, "Ad",cell_format)
+                worksheet.write(0, 2, "Soyad",cell_format)
+                worksheet.write(0, 3, "Yas",cell_format)
+                worksheet.write(0, 4, "Pozisyon",cell_format)
+                worksheet.write(0, 5, "Telefon Numarasi",cell_format)
+                worksheet.write(0, 6, "Mesai Tipi",cell_format)
+                worksheet.write(0, 7, "Aciklama",cell_format)
+                worksheet.write(0, 8, "Fotograf Uzantisi",cell_format)
                 for i, row in enumerate(mysel):
                     for j, value in enumerate(row):
                         worksheet.write(i+1, j, row[j])
                 workbook.close()
         except Exception:
-            QMessageBox.warning(self, 'Uzanti hatasi!',
-                                               "Lutfen dosyayi Turkce karakter icermeyen bir uzantiya kaydedin.\n",
+            QMessageBox.warning(self, 'Kaydetme Hatasi!',
+                                               "Bilinmeyen bir hata gerçekleşti!.\n",
                                                QMessageBox.Ok, QMessageBox.Ok)
     def GirisCikis_Excel(self):
         try:
@@ -161,20 +162,21 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
                 worksheet = workbook.add_worksheet()
                 content = 'SELECT TcNo,Ad,Soyad,Tarih,Saat,Tipi FROM giriscikis'
                 mysel = conn.execute(content)
-                worksheet.write(0, 0, "T.C. No")
-                worksheet.write(0, 1, "Ad")
-                worksheet.write(0, 2, "Soyad")
-                worksheet.write(0, 3, "Tarih")
-                worksheet.write(0, 4,"Saat")
-                worksheet.write(0, 5, "Tipi")
+                cell_format = workbook.add_format({'bold': True, 'italic': False})
+                worksheet.write(0, 0, "T.C. No",cell_format)
+                worksheet.write(0, 1, "Ad",cell_format)
+                worksheet.write(0, 2, "Soyad",cell_format)
+                worksheet.write(0, 3, "Tarih",cell_format)
+                worksheet.write(0, 4,"Saat",cell_format)
+                worksheet.write(0, 5, "Tipi",cell_format)
                 for i, row in enumerate(mysel):
                     for j, value in enumerate(row):
                         worksheet.write(i+1, j, row[j])
                 workbook.close()
         except Exception:
-            QMessageBox.warning(self, 'Uzanti hatasi!',
-                                               "Lutfen dosyayi Turkce karakter icermeyen bir uzantiya kaydedin.\n",
-                                               QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.warning(self, 'Kaydetme Hatasi!',
+                                "Bilinmeyen bir hata gerçekleşti!.\n",
+                                QMessageBox.Ok, QMessageBox.Ok)
     def Contact(self):
         QMessageBox.information(self, 'Gelistirici Hakkinda...',
                             "Bu program Sakarya Universitesi ogrencisi, Hasan Burak Ketmen tarafından yazilmistir.\n" + "Iletisim icin buraketmen@gmail.com mail adresine mail atabilirsiniz.",
@@ -402,19 +404,26 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
                         cv2.imwrite(filename, crop_img)
                         if(self.addingAdd.radioButtonGece.isChecked()==True):
                             self.mesaitipi ="Gece"
-                        curs.execute("""INSERT INTO personeller(TcNo,image,Ad,Soyad,Yas,Pozisyon,TelNo,Aciklama,MesaiTipi) 
-                                                                                                    VALUES(?,?,?,?,?,?,?,?,?)""",
-                                     (tcno, filename, ad, soyad, yas, pozisyon, telno, aciklama,self.mesaitipi))
-                        conn.commit()
-                        known_face_names.append(str(tcno) + ".jpg")
                         image = face_recognition.load_image_file("./yuzler/" + str(tcno) + ".jpg")
-                        image_face_encoding = face_recognition.face_encodings(image)[0]
-                        known_face_encodings.append(image_face_encoding)
-                        self.addingAdd.close()
-                        self.photo = None
-                        self.mesaitipi = "Gunduz"
-                        QMessageBox.information(self, 'Kayit Basarili!',
-                                                "Personel kaydi ve yuz taramasi basariyla yapildi.\n",
+                        if(len(face_recognition.face_encodings(image))>0):
+                            known_face_names.append(str(tcno) + ".jpg")
+                            image_face_encoding = face_recognition.face_encodings(image)[0]
+                            known_face_encodings.append(image_face_encoding)
+                            curs.execute("""INSERT INTO personeller(TcNo,image,Ad,Soyad,Yas,Pozisyon,TelNo,Aciklama,MesaiTipi) 
+                                                                                                                                VALUES(?,?,?,?,?,?,?,?,?)""",
+                                         (tcno, filename, ad, soyad, yas, pozisyon, telno, aciklama, self.mesaitipi))
+                            conn.commit()
+                            self.Load_Database()
+                            self.addingAdd.close()
+                            self.photo = None
+                            self.mesaitipi = "Gunduz"
+                            QMessageBox.information(self, 'Kayit Basarili!',
+                                                    "Personel kaydi ve yuz taramasi basariyla yapildi.\n",
+                                                    QMessageBox.Ok, QMessageBox.Ok)
+                        else:
+                            os.remove("./yuzler/" + str(tcno) + ".jpg")
+                            QMessageBox.warning(self, 'Gecersiz Fotograf',
+                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
                                                 QMessageBox.Ok, QMessageBox.Ok)
                     else:
                         QMessageBox.warning(self, 'Gecersiz Fotograf',
@@ -503,7 +512,7 @@ class Personel(QDialog,Ui_Dialog):
         self.mesaitipi="Gunduz"
         self.oldtcno = None
         self.photo = None
-        self.oldphoto = None
+        self.oldphoto= None
         self.avaiblephoto= True
 
     def Init_Ui(self):
@@ -615,20 +624,26 @@ class Personel(QDialog,Ui_Dialog):
                         cv2.imwrite(filename, crop_img)
                         if (self.addingAdd.radioButtonGece.isChecked() == True):
                             self.mesaitipi = "Gece"
-                        curs.execute("""INSERT INTO personeller(TcNo,image,Ad,Soyad,Yas,Pozisyon,TelNo,Aciklama,MesaiTipi) 
-                                                                                            VALUES(?,?,?,?,?,?,?,?,?)""",
-                                     (tcno, filename, ad, soyad, yas, pozisyon, telno, aciklama, self.mesaitipi))
-                        conn.commit()
-                        self.Load_Database()
-                        known_face_names.append(str(tcno) + ".jpg")
                         image = face_recognition.load_image_file("./yuzler/" + str(tcno) + ".jpg")
-                        image_face_encoding = face_recognition.face_encodings(image)[0]
-                        known_face_encodings.append(image_face_encoding)
-                        self.addingAdd.close()
-                        self.photo = None
-                        self.mesaitipi="Gunduz"
-                        QMessageBox.information(self, 'Kayit Basarili!',
-                                                "Personel kaydi ve yuz taramasi basariyla yapildi.\n",
+                        if (len(face_recognition.face_encodings(image)) > 0):
+                            known_face_names.append(str(tcno) + ".jpg")
+                            image_face_encoding = face_recognition.face_encodings(image)[0]
+                            known_face_encodings.append(image_face_encoding)
+                            curs.execute("""INSERT INTO personeller(TcNo,image,Ad,Soyad,Yas,Pozisyon,TelNo,Aciklama,MesaiTipi) 
+                                                                                                                        VALUES(?,?,?,?,?,?,?,?,?)""",
+                                         (tcno, filename, ad, soyad, yas, pozisyon, telno, aciklama, self.mesaitipi))
+                            conn.commit()
+                            self.Load_Database()
+                            self.addingAdd.close()
+                            self.photo = None
+                            self.mesaitipi = "Gunduz"
+                            QMessageBox.information(self, 'Kayit Basarili!',
+                                                    "Personel kaydi ve yuz taramasi basariyla yapildi.\n",
+                                                    QMessageBox.Ok, QMessageBox.Ok)
+                        else:
+                            os.remove("./yuzler/" + str(tcno) + ".jpg")
+                            QMessageBox.warning(self, 'Gecersiz Fotograf',
+                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
                                                 QMessageBox.Ok, QMessageBox.Ok)
                     else:
                         QMessageBox.warning(self, 'Gecersiz Fotograf',
@@ -667,61 +682,98 @@ class Personel(QDialog,Ui_Dialog):
         if (len(tcno) == 11 and len(ad) <= 20 and len(soyad) <= 20 and len(yas) <= 2 and len(telno) <= 11 and len(
                 pozisyon) <= 30):
             if(str(self.oldtcno)==str(tcno)):
-                if(self.avaiblephoto == True):
+                if(len(self.oldphoto)!=len(self.photo)):
                     rgb_img = self.photo[:, :, ::-1]
                     face_locations = face_recognition.face_locations(rgb_img)
                     if (len(face_locations) == 1):
-                        if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
-                            os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
                         for (top, right, bottom, left), name in zip(face_locations, face_names):
                             crop_img = self.photo[top:bottom, left:right]
-                        cv2.imwrite(filename, crop_img)
-                        curs.execute("""UPDATE personeller SET TcNo = ? ,
-                                                        image = ? ,
-                                                        Ad = ? ,
-                                                        Soyad = ? ,
-                                                        Yas = ? ,
-                                                        Pozisyon = ? ,
-                                                        TelNo = ? ,
-                                                        MesaiTipi = ?,
-                                                        Aciklama = ?
-                                                        WHERE TcNo = ?""",
-                                     (tcno, filename, ad, soyad, yas, pozisyon, telno,self.mesaitipi, aciklama, self.oldtcno))
-                        conn.commit()
-                        self.photo = None
-                        self.oldtcno = None
-                        self.oldphoto = None
-                        self.mesaitipi="Gunduz"
-                        self.Load_Database()
+                        if (len(face_recognition.face_encodings(crop_img)) > 0):
+                            if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
+                                os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
+                            cv2.imwrite(filename, crop_img)
+                            curs.execute("UPDATE personeller SET TcNo = ? , image = ? , Ad = ? ,Soyad = ? , Yas = ? , Pozisyon = ? , TelNo = ? , MesaiTipi = ?, Aciklama = ? WHERE TcNo = ?",
+                                         (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
+                            conn.commit()
+                            self.photo = None
+                            self.oldtcno = None
+                            self.oldphoto = None
+                            self.mesaitipi = "Gunduz"
+                            self.Load_Database()
 
-                        self.addingUpdate.close()
-                        QMessageBox.information(self, 'Guncelleme Basarili!',
-                                                "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
+                            self.addingUpdate.close()
+                            QMessageBox.information(self, 'Guncelleme Basarili!',
+                                                    "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
+                                                    QMessageBox.Ok, QMessageBox.Ok)
+                        else:
+                            print("1")
+                            self.loadedImage("./yuzler/" + str(self.oldtcno) + ".jpg")
+                            QMessageBox.warning(self, 'Gecersiz Fotograf',
+                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
                                                 QMessageBox.Ok, QMessageBox.Ok)
                     else:
+                        print("2")
+                        self.loadedImage("./yuzler/" + str(self.oldtcno) + ".jpg")
                         QMessageBox.warning(self, 'Gecersiz Fotograf',
                                             "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
                                             QMessageBox.Ok, QMessageBox.Ok)
                 else:
-                    rgb_img = self.photo[:, :, ::-1]
-                    face_locations = face_recognition.face_locations(rgb_img)
-                    if (len(face_locations) == 1):
+                    curs.execute(
+                        "UPDATE personeller SET TcNo = ? , image = ? , Ad = ? ,Soyad = ? , Yas = ? , Pozisyon = ? , TelNo = ? , MesaiTipi = ?, Aciklama = ? WHERE TcNo = ?",
+                        (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
+                    conn.commit()
+                    self.photo = None
+                    self.oldtcno = None
+                    self.oldphoto = None
+                    self.mesaitipi = "Gunduz"
+                    self.Load_Database()
+
+                    self.addingUpdate.close()
+                    QMessageBox.information(self, 'Guncelleme Basarili!',
+                                            "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
+                                            QMessageBox.Ok, QMessageBox.Ok)
+
+            else:
+                if(results==None):
+                    if (len(self.oldphoto)!=len(self.photo)):
+                        rgb_img = self.photo[:, :, ::-1]
+                        face_locations = face_recognition.face_locations(rgb_img)
+                        if (len(face_locations) == 1):
+                            for (top, right, bottom, left), name in zip(face_locations, face_names):
+                                crop_img = self.photo[top:bottom, left:right]
+                            if (len(face_recognition.face_encodings(crop_img)) > 0):
+                                if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
+                                    os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
+                                cv2.imwrite(filename, crop_img)
+                                curs.execute( "UPDATE personeller SET TcNo = ? , image = ? , Ad = ? , Soyad = ? , Yas = ? , Pozisyon = ? , TelNo = ? , MesaiTipi = ?, Aciklama = ? WHERE TcNo = ?",
+                                    (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
+                                conn.commit()
+                                self.photo = None
+                                self.oldtcno = None
+                                self.oldphoto = None
+                                self.mesaitipi = "Gunduz"
+                                self.Load_Database()
+                                self.addingUpdate.close()
+                                QMessageBox.information(self, 'Guncelleme Basarili!',
+                                                        "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
+                                                        QMessageBox.Ok, QMessageBox.Ok)
+                            else:
+                                self.loadedImage("./yuzler/" + str(self.oldtcno) + ".jpg")
+                                QMessageBox.warning(self, 'Gecersiz Fotograf',
+                                                    "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
+                                                    QMessageBox.Ok, QMessageBox.Ok)
+                        else:
+                            self.loadedImage("./yuzler/" + str(self.oldtcno) + ".jpg")
+                            QMessageBox.warning(self, 'Gecersiz Fotograf',
+                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
+                                                QMessageBox.Ok, QMessageBox.Ok)
+                    else:
                         if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
                             os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
-                        for (top, right, bottom, left), name in zip(face_locations, face_names):
-                            crop_img = self.photo[top:bottom, left:right]
-                        cv2.imwrite(filename, crop_img)
-                        curs.execute("""UPDATE personeller SET TcNo = ? ,
-                                                                                image = ? ,
-                                                                                Ad = ? ,
-                                                                                Soyad = ? ,
-                                                                                Yas = ? ,
-                                                                                Pozisyon = ? ,
-                                                                                TelNo = ? ,
-                                                                                MesaiTipi = ?,
-                                                                                Aciklama = ?
-                                                                                WHERE TcNo = ?""",
-                                     (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
+                        cv2.imwrite(filename, self.oldphoto)
+                        curs.execute(
+                            "UPDATE personeller SET TcNo = ? , image = ? , Ad = ? , Soyad = ? , Yas = ? , Pozisyon = ? , TelNo = ? , MesaiTipi = ?, Aciklama = ? WHERE TcNo = ?",
+                            (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
                         conn.commit()
                         self.photo = None
                         self.oldtcno = None
@@ -730,82 +782,9 @@ class Personel(QDialog,Ui_Dialog):
                         self.Load_Database()
                         self.addingUpdate.close()
                         QMessageBox.information(self, 'Guncelleme Basarili!',
-                                            "Personel bilgi guncellemesi basariyla yapildi.\n" +"Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
-                                            QMessageBox.Ok, QMessageBox.Ok)
-                    else:
-                        QMessageBox.warning(self, 'Gecersiz Fotograf',
-                                            "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
-                                            QMessageBox.Ok, QMessageBox.Ok)
-            else:
-                if(results==None):
-                    if (self.avaiblephoto == True):
-                        rgb_img = self.photo[:, :, ::-1]
-                        face_locations = face_recognition.face_locations(rgb_img)
-                        if (len(face_locations) == 1):
-                            if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
-                                os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
-                            for (top, right, bottom, left), name in zip(face_locations, face_names):
-                                crop_img = self.photo[top:bottom, left:right]
-                            cv2.imwrite(filename, crop_img)
-                            curs.execute("""UPDATE personeller SET TcNo = ? ,
-                                                                                    image = ? ,
-                                                                                    Ad = ? ,
-                                                                                    Soyad = ? ,
-                                                                                    Yas = ? ,
-                                                                                    Pozisyon = ? ,
-                                                                                    TelNo = ? ,
-                                                                                    MesaiTipi = ?,
-                                                                                    Aciklama = ?
-                                                                                    WHERE TcNo = ?""",
-                                         (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
-                            conn.commit()
-                            self.photo = None
-                            self.oldtcno = None
-                            self.oldphoto = None
-                            self.mesaitipi = "Gunduz"
-                            self.Load_Database()
-                            self.addingUpdate.close()
-                            QMessageBox.information(self, 'Guncelleme Basarili!',
-                                                    "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
-                                                    QMessageBox.Ok, QMessageBox.Ok)
-                        else:
-                            QMessageBox.warning(self, 'Gecersiz Fotograf',
-                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
+                                                "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
                                                 QMessageBox.Ok, QMessageBox.Ok)
-                    else:
-                        rgb_img = self.photo[:, :, ::-1]
-                        face_locations = face_recognition.face_locations(rgb_img)
-                        if (len(face_locations) == 1):
-                            if os.path.exists("./yuzler/" + str(self.oldtcno) + ".jpg"):
-                                os.remove("./yuzler/" + str(self.oldtcno) + ".jpg")
-                            for (top, right, bottom, left), name in zip(face_locations, face_names):
-                                crop_img = self.photo[top:bottom, left:right]
-                            cv2.imwrite(filename, crop_img)
-                            curs.execute("""UPDATE personeller SET TcNo = ? ,
-                                                                                    image = ? ,
-                                                                                    Ad = ? ,
-                                                                                    Soyad = ? ,
-                                                                                    Yas = ? ,
-                                                                                    Pozisyon = ? ,
-                                                                                    TelNo = ? ,
-                                                                                    MesaiTipi = ?,
-                                                                                    Aciklama = ?
-                                                                                    WHERE TcNo = ?""",
-                                         (tcno, filename, ad, soyad, yas, pozisyon, telno, self.mesaitipi, aciklama, self.oldtcno))
-                            conn.commit()
-                            self.photo = None
-                            self.oldtcno = None
-                            self.oldphoto = None
-                            self.mesaitipi = "Gunduz"
-                            self.Load_Database()
-                            self.addingUpdate.close()
-                            QMessageBox.information(self, 'Guncelleme Basarili!',
-                                                    "Personel bilgi guncellemesi basariyla yapildi.\n" + "Yuz taramasi yapilmadigi icin tekrar tarama yapilmasi tavsiye edilir.",
-                                                    QMessageBox.Ok, QMessageBox.Ok)
-                        else:
-                            QMessageBox.warning(self, 'Gecersiz Fotograf',
-                                                "Eklenmek istenen fotograf yuz tanima icin gecersiz.\n",
-                                                QMessageBox.Ok, QMessageBox.Ok)
+
                 else:
                     QMessageBox.warning(self, 'Hata!',
                                         "Guncellenen T.C. numarasi ile kayit mevcut.\n",
@@ -826,7 +805,7 @@ class Personel(QDialog,Ui_Dialog):
                 data = row[1]
                 tcno = data[0]
                 buttonReply = QMessageBox.question(self, 'Personel Silme İslemi', str(tcno) +
-                                                   " T.C. Numaralı personeli sildiginizde personele ait giris-cikis kayitlari da silinir. Bunu yapmak istediginize emin misiniz?",
+                                                   " kimlik numarali personeli sildiginizde personele ait giris ve cikis kayitlari da silinir. Bunu yapmak istediginize emin misiniz?",
                                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                 if buttonReply == QMessageBox.Yes:
                     if os.path.exists("./yuzler/" + str(tcno) + ".jpg"):
@@ -994,6 +973,7 @@ class PersonelGuncelle(QDialog,PersonelGuncelle.Ui_Dialog):
             self.setWindowIcon(QtGui.QIcon('./icon.png'))
         except Exception:
             pass
+
 def main():
     app = QApplication([])
     win = PersonelApp()
@@ -1005,4 +985,43 @@ def main():
     app.exec_()
 
 main()
+
+"""
+class Login(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(Login, self).__init__(parent)
+        self.textName = QtWidgets.QLineEdit(self)
+        self.textPass = QtWidgets.QLineEdit(self)
+        self.textAd = QtWidgets.QLabel('Kullanici Adi',self)
+        self.textParola = QtWidgets.QLabel('Parola', self)
+
+        self.buttonLogin = QtWidgets.QPushButton('Giris', self)
+        self.buttonLogin.clicked.connect(self.handleLogin)
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.textAd)
+        layout.addWidget(self.textName)
+        layout.addWidget(self.textParola)
+        layout.addWidget(self.textPass)
+        layout.addWidget(self.buttonLogin)
+
+    def handleLogin(self):
+        if (self.textName.text() == 'admin' and
+            self.textPass.text() == '123456'):
+            self.accept()
+        else:
+            QtWidgets.QMessageBox.warning(
+                self, 'Hata!', 'Yanlis kullanici veya şifre!')
+
+
+if __name__ == '__main__':
+
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    login = Login()
+
+    if login.exec_() == QtWidgets.QDialog.Accepted:
+        window = PersonelApp()
+        window.show()
+        sys.exit(app.exec_())
+"""
 
