@@ -3,13 +3,8 @@
 import PIL.Image
 import dlib
 import numpy as np
+import face_recognition_models
 
-try:
-    import face_recognition_models
-except Exception:
-    print("Please install `face_recognition_models` with this command before using `face_recognition`:\n")
-    print("pip install git+https://github.com/ageitgey/face_recognition_models")
-    quit()
 
 face_detector = dlib.get_frontal_face_detector()
 
