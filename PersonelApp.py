@@ -74,6 +74,7 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
         self.photo = None
         self.fname = None
         self.capture = None
+        self.oldtcno=None
         self.iterim=1
         self.mesaitipi = "Gunduz"
         self.oldsecond=None
@@ -304,7 +305,10 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
                 dotname = switch_name[4:]
                 new_name = dotname[::-1]
                 tcno=new_name
+                if(str(self.oldtcno) !=str(tcno) and self.oldtcno!=None):
+                    self.Add_Log(self.oldtcno)
                 self.Add_Log(tcno)
+                self.oldtcno = tcno
             else:
                 new_name = "Bilinmiyor"
             cv2.putText(img, new_name, (left + 1, bottom + 30), font, 1.0, (255, 255, 255), 1)
