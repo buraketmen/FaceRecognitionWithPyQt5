@@ -229,7 +229,6 @@ class Ui_MainWindow(object):
         self.menuExceleAktar.addAction(self.actionGiris_Cikis_KayitlariniExcelDosyasinaAktar)
         self.menuDosya.addAction(self.menuExceleAktar.menuAction())
         self.menuDosya.addSeparator()
-        self.menuDosya.addAction(self.actionCikis)
         self.menuPersonel.addAction(self.actionPersoneller)
         self.menuPersonel.addAction(self.actionPersonelEkle)
         self.menuPersonel.addSeparator()

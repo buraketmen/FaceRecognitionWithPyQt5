@@ -3,8 +3,13 @@
 import PIL.Image
 import dlib
 import numpy as np
-import face_recognition_models
 
+try:
+    import face_recognition_models
+except Exception:
+    print("Please install `face_recognition_models` with this command before using `face_recognition`:\n")
+    print("pip install git+https://github.com/ageitgey/face_recognition_models")
+    quit()
 
 face_detector = dlib.get_frontal_face_detector()
 
@@ -205,7 +210,7 @@ def face_encodings(face_image, known_face_locations=None, num_jitters=1):
     return [np.array(face_encoder.compute_face_descriptor(face_image, raw_landmark_set, num_jitters)) for raw_landmark_set in raw_landmarks]
 
 
-def compare_faces(known_face_encodings, face_encoding_to_check, tolerance=0.6):
+def compare_faces(known_face_encodings, face_encoding_to_check, tolerance=0.5):
     """
     Compare a list of face encodings against a candidate encoding to see if they match.
 

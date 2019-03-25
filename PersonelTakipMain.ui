@@ -360,7 +360,6 @@ background-color: rgb(0, 0, 0)
     </widget>
     <addaction name="menuExceleAktar"/>
     <addaction name="separator"/>
-    <addaction name="actionCikis"/>
    </widget>
    <widget class="QMenu" name="menuPersonel">
     <property name="title">

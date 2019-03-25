@@ -332,14 +332,14 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
 
         tipi = "Bilinmiyor"
         if(mesaitipi=="Gunduz"):
-            if(7<=hour<=10):
+            if(7<=hour<=11):
                 tipi = "Giris"
-            if(20 >= hour >= 16):
+            if(23 >= hour >= 16):
                 tipi = "Cikis"
         if (mesaitipi == "Gece"):
-            if (7 <= hour <= 10):
+            if (7 <= hour <= 11):
                 tipi = "Cikis"
-            if (20 >= hour >= 16):
+            if (23 >= hour >= 16):
                 tipi = "Giris"
 
         if (self.iterim == 1):
@@ -358,7 +358,7 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
             for row in rows:
                 i=i+1
         if(i==0):
-            if (7 <= hour <= 10 or 20 >= hour >= 16):
+            if (7 <= hour <= 11 or 23 >= hour >= 16):
                 curs.execute("INSERT INTO giriscikis (TcNo,Ad,Soyad,Tarih,Saat,Tipi) VALUES(?,?,?,?,?,?)",
                              (tcno, ad, soyad, date, time,tipi))
                 conn.commit()
@@ -366,7 +366,7 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
             for row in rows:
                 log_hour=int(row[0][0:2])
             if(log_hour +5 < hour):
-                if (7 <= hour <= 10 or 20 >= hour >= 16):
+                if (7 <= hour <= 11 or 23 >= hour >= 16):
                     curs.execute("INSERT INTO giriscikis (TcNo,Ad,Soyad,Tarih,Saat,Tipi) VALUES(?,?,?,?,?,?)",
                                  (tcno, ad, soyad, date, time,tipi))
                     conn.commit()
