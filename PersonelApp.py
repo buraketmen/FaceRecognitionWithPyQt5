@@ -364,7 +364,10 @@ class PersonelApp(QMainWindow,Ui_MainWindow):
                 conn.commit()
         if(i==1):
             for row in rows:
-                log_hour=int(row[0][0:2])
+                try:
+                    log_hour = int(row[0][0:2])
+                except ValueError:
+                    log_hour = int(row[0][0:1])
             if(log_hour +5 < hour):
                 if (7 <= hour <= 11 or 23 >= hour >= 16):
                     curs.execute("INSERT INTO giriscikis (TcNo,Ad,Soyad,Tarih,Saat,Tipi) VALUES(?,?,?,?,?,?)",
