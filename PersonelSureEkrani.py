@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'PersonelSureEkrani.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -152,4 +153,5 @@ class Ui_Dialog(object):
         item.setText(_translate("Dialog", "Saat"))
         item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("Dialog", "Tipi"))
+
 

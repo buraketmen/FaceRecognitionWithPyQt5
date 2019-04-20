@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'PersonelTakipMain.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -229,6 +230,7 @@ class Ui_MainWindow(object):
         self.menuExceleAktar.addAction(self.actionGiris_Cikis_KayitlariniExcelDosyasinaAktar)
         self.menuDosya.addAction(self.menuExceleAktar.menuAction())
         self.menuDosya.addSeparator()
+        self.menuDosya.addAction(self.actionCikis)
         self.menuPersonel.addAction(self.actionPersoneller)
         self.menuPersonel.addAction(self.actionPersonelEkle)
         self.menuPersonel.addSeparator()
@@ -282,4 +284,5 @@ class Ui_MainWindow(object):
         self.actionFotograf_Ekle.setText(_translate("MainWindow", "Fotograf Ekle"))
         self.actionPersonelleriExcelDosyasinaAktar.setText(_translate("MainWindow", "Personelleri Excel Dosyasina Aktar"))
         self.actionGiris_Cikis_KayitlariniExcelDosyasinaAktar.setText(_translate("MainWindow", "Giris-Cikis Kayitlarini Excel Dosyasina Aktar"))
+
 

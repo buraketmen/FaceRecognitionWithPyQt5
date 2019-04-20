@@ -34,6 +34,18 @@
      <height>51</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>261</width>
+     <height>51</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>261</width>
+     <height>51</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <pointsize>15</pointsize>
@@ -70,6 +82,18 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="labelFotograf">
+      <property name="minimumSize">
+       <size>
+        <width>339</width>
+        <height>343</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>339</width>
+        <height>343</height>
+       </size>
+      </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
@@ -91,7 +115,13 @@
      <widget class="QPushButton" name="buttonFotografYukle">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>339</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>339</width>
         <height>40</height>
        </size>
       </property>
@@ -167,6 +197,18 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>261</width>
+     <height>41</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>261</width>
+     <height>41</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <pointsize>12</pointsize>
@@ -192,6 +234,18 @@
     <enum>Qt::Vertical</enum>
    </property>
    <widget class="QLineEdit" name="editTcNo">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -205,6 +259,18 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editAd">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -218,6 +284,18 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editSoyad">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -228,6 +306,18 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editYas">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -241,6 +331,18 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editPozisyon">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -254,6 +356,18 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editTelefonNo">
+    <property name="minimumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>261</width>
+      <height>36</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
@@ -295,6 +409,18 @@
     </property>
     <item>
      <widget class="QRadioButton" name="radioButtonGunduzGuncelle">
+      <property name="minimumSize">
+       <size>
+        <width>115</width>
+        <height>22</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>115</width>
+        <height>22</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <pointsize>11</pointsize>
@@ -309,6 +435,18 @@
     </item>
     <item>
      <widget class="QRadioButton" name="radioButtonGeceGuncelle">
+      <property name="minimumSize">
+       <size>
+        <width>114</width>
+        <height>22</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>114</width>
+        <height>22</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <pointsize>11</pointsize>
@@ -323,7 +461,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>404</x>
